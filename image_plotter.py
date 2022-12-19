@@ -1,6 +1,5 @@
-"""image_plotter
-
-This script gets the index of an image in the Fashion MNIST dataset, and plots the image.
+"""
+This script gets the index of an image in the Fashion MNIST dataset and plots the image.
 """
 
 import tensorflow as tf

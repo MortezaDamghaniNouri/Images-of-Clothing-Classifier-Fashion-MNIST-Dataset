@@ -1,3 +1,8 @@
+"""
+This script gets the address of a trained model and evaluates the input model using the
+Fashion MNIST test dataset. Finally,  it prints the accuracy of the input model.
+"""
+
 import tensorflow as tf
 from keras.models import load_model
 

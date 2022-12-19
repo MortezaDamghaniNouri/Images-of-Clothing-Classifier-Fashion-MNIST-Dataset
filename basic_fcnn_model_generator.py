@@ -1,4 +1,10 @@
+"""
+This script is written according to the TensorFlow website. In this script, a  model is trained based
+on the Fashion MNIST dataset. Fully Connected Neural Network is used for training the model.
+"""
+
 import tensorflow as tf
+
 
 fashion_mnist = tf.keras.datasets.fashion_mnist
 (train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
