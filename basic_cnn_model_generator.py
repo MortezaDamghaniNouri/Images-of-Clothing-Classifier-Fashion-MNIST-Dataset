@@ -33,7 +33,7 @@ model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accur
 model.summary()
 model.fit(train_images, train_labels, epochs=20, batch_size=32, validation_data=(test_images, test_labels))
 test_loss, test_acc = model.evaluate(test_images,  test_labels, verbose=2)
-model.save("basic_cnn_model.h5")
+model.save("basic_cnn_model(new).h5")
 print("Accuracy: " + str(round(test_acc * 100, 2)) + " %")
 
 
