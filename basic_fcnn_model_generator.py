@@ -1,6 +1,6 @@
 """
 This script is written according to the TensorFlow website. In this script, a  model is trained based
-on the Fashion MNIST dataset. Fully Connected Neural Network is used for training the model.
+on the Fashion MNIST dataset. Fully Connected Neural Network is used for training the model. The FCNN has one hidden layer with 128 neurons.
 """
 
 import tensorflow as tf
