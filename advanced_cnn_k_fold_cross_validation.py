@@ -80,10 +80,12 @@ while i <= 5:
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
     model.summary()
     model.fit(train_images, train_labels, epochs=10, batch_size=32, validation_data=(test_images, test_labels))
+    # evaluating the model
     test_loss, test_acc = model.evaluate(test_images, test_labels, verbose=2)
     accuracy_list.append(test_acc)
     i += 1
 
+# printing the results
 i = 0
 while i < len(accuracy_list):
     print("fold " + str(i + 1) + " accuracy: " + str(round(accuracy_list[i] * 100, 2)) + " %")

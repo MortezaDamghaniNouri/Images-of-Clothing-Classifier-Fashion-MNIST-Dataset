@@ -20,7 +20,9 @@ model.compile(optimizer='adam',
               metrics=['accuracy'])
 
 model.fit(train_images, train_labels, epochs=10)
+# evaluating the model
 test_loss, test_acc = model.evaluate(test_images,  test_labels, verbose=2)
+# saving the trained model
 model.save("model.h5")
 print("Accuracy: " + str(round(test_acc * 100, 2)) + " %")
 
