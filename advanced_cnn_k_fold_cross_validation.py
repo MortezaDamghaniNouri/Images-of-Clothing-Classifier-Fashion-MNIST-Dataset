@@ -1,24 +1,26 @@
 """
-In this script, a classifier is implemented using Convolutional Neural Network with an innovative architecture.
-The architecture consists of three convolutional layers, and each of them has sixty four 3 * 3 filters. After each
-convolutional layer, there is a maxpooling layer. After the convolutional layers, a Fully Connected Neural Network
-is used with one hidden layer which has 128 neurons. 5-fold cross-validation is used for evaluation.
+In this script, a classifier is implemented using Convolutional Neural Network with 3-block
+Visual Geometry Group (VGG) architecture. 5-fold cross-validation is used for evaluation.
 """
 
 import tensorflow as tf
 from keras.models import Sequential
 from keras.layers import Dense
+from keras.layers import Dropout
 from keras.layers import Flatten
 from keras.layers.convolutional import Conv2D
 from keras.layers.convolutional import MaxPooling2D
 import copy
 import numpy as np
+from keras.utils import np_utils
 
 
 fashion_mnist = tf.keras.datasets.fashion_mnist
 (train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
 train_images = train_images / 255.0
 test_images = test_images / 255.0
+train_labels = np_utils.to_categorical(train_labels)
+test_labels = np_utils.to_categorical(test_labels)
 all_images = []
 for i in train_images:
     all_images.append(i)
@@ -59,18 +61,25 @@ while i <= 5:
     test_labels = np.array(test_labels)
     # training a model
     model = Sequential()
-    model.add(Conv2D(64, (3, 3), activation='relu', padding='same', input_shape=(28, 28, 1)))
+    model.add(Conv2D(32, (3, 3), activation='relu', padding='same', input_shape=(28, 28, 1)))
+    model.add(Conv2D(32, (3, 3), activation='relu', padding='same'))
     model.add(MaxPooling2D((2, 2)))
+    model.add(Dropout(0.2))
+    model.add(Conv2D(64, (3, 3), activation='relu', padding='same'))
     model.add(Conv2D(64, (3, 3), activation='relu', padding='same'))
     model.add(MaxPooling2D((2, 2)))
-    model.add(Conv2D(64, (3, 3), activation='relu', padding='same'))
+    model.add(Dropout(0.2))
+    model.add(Conv2D(128, (3, 3), activation='relu', padding='same'))
+    model.add(Conv2D(128, (3, 3), activation='relu', padding='same'))
     model.add(MaxPooling2D((2, 2)))
+    model.add(Dropout(0.2))
     model.add(Flatten())
+    model.add(Dense(256, activation='relu'))
     model.add(Dense(128, activation='relu'))
-    model.add(Dense(10))
-    model.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True), optimizer='adam', metrics=['accuracy'])
+    model.add(Dense(10, activation='softmax'))
+    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
     model.summary()
-    model.fit(train_images, train_labels, epochs=10, validation_data=(test_images, test_labels))
+    model.fit(train_images, train_labels, epochs=10, batch_size=32, validation_data=(test_images, test_labels))
     test_loss, test_acc = model.evaluate(test_images, test_labels, verbose=2)
     accuracy_list.append(test_acc)
     i += 1
@@ -83,5 +92,8 @@ summation = 0
 for i in accuracy_list:
     summation += round(i * 100, 2)
 print("Mean accuracy: " + str(round(summation / len(accuracy_list), 2)) + " %")
+
+
+
 
 
