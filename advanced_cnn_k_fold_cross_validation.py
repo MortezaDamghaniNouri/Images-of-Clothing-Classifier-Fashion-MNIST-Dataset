@@ -36,7 +36,7 @@ for i in test_labels:
 fold_number = 5
 i = 1
 accuracy_list = []
-while i <= 5:
+while i <= fold_number:
     print("Fold: " + str(i))
     test_images = []
     test_labels = []
